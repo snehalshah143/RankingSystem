@@ -1,10 +1,7 @@
 package org.example.core;
 
 import org.example.helper.*;
-import org.example.model.CandleTimeFrame;
-import org.example.model.IndicatorRank;
-import org.example.model.StockData;
-import org.example.model.StockRank;
+import org.example.model.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,11 +10,11 @@ public class PointsCalculator {
 
 public static Map<CandleTimeFrame,Integer> multipleierMap=new HashMap<>();
 
-public PointsCalculator(){
-    multipleierMap.put(CandleTimeFrame.MONTHLY,3);
-    multipleierMap.put(CandleTimeFrame.WEEKLY,2);
-    multipleierMap.put(CandleTimeFrame.DAILY,1);
-    multipleierMap.put(CandleTimeFrame.SEVENTY_FIVE_MINUTE,1);
+public PointsCalculator(RankingMultiple rankingMultiple){
+    multipleierMap.put(CandleTimeFrame.MONTHLY,rankingMultiple.getM_Multiple());
+    multipleierMap.put(CandleTimeFrame.WEEKLY,rankingMultiple.getW_Multiple());
+    multipleierMap.put(CandleTimeFrame.DAILY,rankingMultiple.getD_Multiple());
+    multipleierMap.put(CandleTimeFrame.SEVENTY_FIVE_MINUTE,rankingMultiple.getMIN75_Multiple());
 }
 
     public StockRank getStockRankForSymbol(StockData stockData){

@@ -18,18 +18,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Ranking {
+
+    public static String dailyIndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\Daily-Indicator-Data.csv";
+    public static  String weeklyIndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\Weekly-Indicator-Data.csv";
+    public static String monthlyIndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\Monthly-Indicator-Data.csv";
+    public static String min75IndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\MIN75-Indicator-Data.csv";
+    public static String ohlcFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\HIGH-LOW-DATA.csv";
+    public static String stockRankReportFor_3_2_1_1="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\output\\STOCK_RANK_REPORT_LONG_TERM_3_2_1_1.csv";
+
+    public static String stockRankReportFor_1_1_1_1="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\output\\STOCK_RANK_REPORT_MEDIUM_TERM_1_1_1_1.csv";
+
+    public static String stockRankReportFor_1_2_3_4="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\output\\STOCK_RANK_REPORT_INTRADAY_POSITIONAL_1_2_3_4.csv";
+
     public static void main(String[] args) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
 
         Ranking ranking=new Ranking();
-String dailyIndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\Daily-Indicator-Data.csv";
-        String weeklyIndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\Weekly-Indicator-Data.csv";
-        String monthlyIndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\Monthly-Indicator-Data.csv";
-        String min75IndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\MIN75-Indicator-Data.csv";
-
-
-        String ohlcFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\HIGH-LOW-DATA.csv";
-
-        String stockRankReport="C:\\Users\\snehal.shah\\algofinserve\\New folder\\RankingSystem\\src\\main\\resources\\output\\STOCK_RANK_REPORT.csv";
 
         List<StockOHLCData> ohlcData= ranking.csvToHLData(ohlcFileName);
         List<IndicatorData> indicatorD= ranking.csvToIndicatorData(dailyIndicatorFileName);
@@ -45,27 +48,38 @@ String dailyIndicatorFileName="C:\\Users\\snehal.shah\\algofinserve\\New folder\
         Map<String,IndicatorData> indicatorMIN75DataForSymbolMap=indicatorMIN75.stream().collect(Collectors.toMap(p->p.getSymbol(),p->p));
 
 
-        Map<String, StockData> stocksDataForSymbolMap= populateStockDataForSymbolMap(ohlcData, indicatorDailyDataForSymbolMap,
+        Map<String, StockData> stocksDataForSymbolMap= populateAndGetStockDataForSymbolMap(ohlcData, indicatorDailyDataForSymbolMap,
                 indicatorWeeklyDataForSymbolMap, indicatorMonthlyDataForSymbolMap,
                 indicatorMIN75DataForSymbolMap);
-Map<String, StockRank> stockRankForSymbol= populateAndGetStockRank(stocksDataForSymbolMap);
 
-/*for(StockRank stockRank:stockRankForSymbol.values()){
-    System.out.println(stockRank.toString());
-}*/
-List<StockRankOutput> stockRankOutputList= StockRankOutputHelper.getStockRankOutputList(stocksDataForSymbolMap);
-generateStockRankReport(stockRankReport,stockRankOutputList);
+        //Longterm
+        RankingMultiple rankingMultiple=new RankingMultiple(3,2,1,1);
+//Map<String, StockRank> stockRankForSymbol=
+        populateAndGetStockRank(stocksDataForSymbolMap,rankingMultiple);
+generateStockRankReport(stockRankReportFor_3_2_1_1,stocksDataForSymbolMap);
 
+        //Medium Term-Swing
+        rankingMultiple=new RankingMultiple(1,1,1,1);
+        populateAndGetStockRank(stocksDataForSymbolMap,rankingMultiple);
+        generateStockRankReport(stockRankReportFor_1_1_1_1,stocksDataForSymbolMap);
+
+//Short Term -Intraday -Positional
+        rankingMultiple=new RankingMultiple(1,2,3,4);
+        populateAndGetStockRank(stocksDataForSymbolMap,rankingMultiple);
+        generateStockRankReport(stockRankReportFor_1_2_3_4,stocksDataForSymbolMap);
 
     }
 
-    private static void generateStockRankReport(String stockRankReport, List<StockRankOutput> stockRankOutputList) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+    private static void generateStockRankReport(String stockRankReport, Map<String, StockData> stocksDataForSymbolMap) throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         ReportGenerator reportGenerator=new ReportGenerator();
+        List<StockRankOutput> stockRankOutputList= StockRankOutputHelper.getStockRankOutputList(stocksDataForSymbolMap);
+
+        //reportGenerator.generateStockRankReport(stockRankReport,stockRankOutputList);
         reportGenerator.generateStockRankReport1(stockRankReport,stockRankOutputList);
     }
 
-    private static Map<String, StockRank> populateAndGetStockRank(Map<String, StockData> stocksDataForSymbolMap){
-        PointsCalculator pointsCalculator=new PointsCalculator();
+    private static Map<String, StockRank> populateAndGetStockRank(Map<String, StockData> stocksDataForSymbolMap,RankingMultiple rankingMultiple){
+        PointsCalculator pointsCalculator=new PointsCalculator(rankingMultiple);
         Map<String, StockRank> stockRankForSymbol=new HashMap<>();
         for(StockData stockData:stocksDataForSymbolMap.values()){
             stockRankForSymbol.put(stockData.getSymbol(), pointsCalculator.getStockRankForSymbol(stockData));
@@ -73,7 +87,7 @@ generateStockRankReport(stockRankReport,stockRankOutputList);
         return stockRankForSymbol;
     }
 
-    private static Map<String,StockData> populateStockDataForSymbolMap(List<StockOHLCData> ohlcData, Map<String, IndicatorData> indicatorDailyDataForSymbolMap,
+    private static Map<String,StockData> populateAndGetStockDataForSymbolMap(List<StockOHLCData> ohlcData, Map<String, IndicatorData> indicatorDailyDataForSymbolMap,
                                                                        Map<String, IndicatorData> indicatorWeeklyDataForSymbolMap,
                                                                        Map<String, IndicatorData> indicatorMonthlyDataForSymbolMap,
                                                                        Map<String, IndicatorData> indicatorMIN75DataForSymbolMap) {

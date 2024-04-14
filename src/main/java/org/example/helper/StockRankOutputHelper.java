@@ -1,5 +1,9 @@
 package org.example.helper;
 
+import org.example.comparator.StockRankDailyComparator;
+import org.example.comparator.StockRankMIN75Comparator;
+import org.example.comparator.StockRankMonthlyComparator;
+import org.example.comparator.StockRankWeeklyComparator;
 import org.example.model.*;
 
 import java.util.*;
@@ -30,7 +34,14 @@ public class StockRankOutputHelper {
             stockRankOutput.setM_IndicatorPoints(M_ir.getIndicatorOverAllPoints());
             stockRankOutput.setW_IndicatorPoints(W_ir.getIndicatorOverAllPoints());
             stockRankOutput.setD_IndicatorPoints(D_ir.getIndicatorOverAllPoints());
-            stockRankOutput.setM_IndicatorPoints(MIN75_ir.getIndicatorOverAllPoints());
+            stockRankOutput.setMIN75_IndicatorPoints(MIN75_ir.getIndicatorOverAllPoints());
+
+
+            stockRankOutput.setD_allPoints(stockRank.getBreakoutPoints() + D_ir.getIndicatorOverAllPoints());
+            stockRankOutput.setW_allPoints(stockRank.getBreakoutPoints() + W_ir.getIndicatorOverAllPoints());
+            stockRankOutput.setM_allPoints(stockRank.getBreakoutPoints() + M_ir.getIndicatorOverAllPoints());
+            stockRankOutput.setMIN75_allPoints(stockRank.getBreakoutPoints() + MIN75_ir.getIndicatorOverAllPoints());
+
 
             stockRankOutput.setD_adxPoints(D_ir.getAdxPoints());
             stockRankOutput.setD_emaPoints(D_ir.getEmaPoints());
@@ -60,12 +71,52 @@ public class StockRankOutputHelper {
             stockRankOutput.setMIN75_rsiPoints(MIN75_ir.getRsiPoints());
             stockRankOutput.setMIN75_volumePoints(MIN75_ir.getVolumePoints());
 
+
+
             stockRankOutputList.add(stockRankOutput);
         }
+        addMonthlyRanking(stockRankOutputList);
+        addWeeklyRanking(stockRankOutputList);
+        addDailyRanking(stockRankOutputList);
+        addMIN75Ranking(stockRankOutputList);
+
         Collections.sort(stockRankOutputList);
         stockRankOutputList=addOverAllRanking(stockRankOutputList);
+
         return stockRankOutputList;
 
+    }
+
+    private static void addMIN75Ranking(List<StockRankOutput> stockRankOutputList) {
+        Collections.sort(stockRankOutputList, new StockRankMIN75Comparator());
+        int i = 1;
+        for (StockRankOutput stockRankOutput : stockRankOutputList) {
+            stockRankOutput.setMIN75_Rank(i++);
+        }
+    }
+    private static void addDailyRanking(List<StockRankOutput> stockRankOutputList) {
+        Collections.sort(stockRankOutputList, new StockRankDailyComparator());
+        int i = 1;
+        for (StockRankOutput stockRankOutput : stockRankOutputList) {
+            stockRankOutput.setD_Rank(i++);
+        }
+    }
+
+    private static void addWeeklyRanking(List<StockRankOutput> stockRankOutputList) {
+        Collections.sort(stockRankOutputList, new StockRankWeeklyComparator());
+        int i = 1;
+        for (StockRankOutput stockRankOutput : stockRankOutputList) {
+            stockRankOutput.setW_Rank(i++);
+        }
+    }
+
+    private static void addMonthlyRanking(List<StockRankOutput> stockRankOutputList) {
+Collections.sort(stockRankOutputList,new StockRankMonthlyComparator());
+        int i=1;
+        for (StockRankOutput stockRankOutput:stockRankOutputList){
+            stockRankOutput.setM_Rank(i++);
+
+        }
     }
 
     private static List<StockRankOutput> addOverAllRanking(List<StockRankOutput> stockRankOutputList){

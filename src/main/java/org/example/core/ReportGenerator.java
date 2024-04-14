@@ -25,11 +25,12 @@ public class ReportGenerator {
 
         ColumnPositionMappingStrategy mappingStrategy = new ColumnPositionMappingStrategy();
         mappingStrategy.setType(StockRankOutput.class);
-
-        StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
+        mappingStrategy.generateHeader(StockRankOutput.class);
+        mappingStrategy.getColumnMapping();
+               StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
                 .withMappingStrategy(mappingStrategy)
                 . withSeparator(',')
-                .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+                       .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                 .build();
 
         beanToCsv.write(stockRankOutputList);
@@ -39,7 +40,7 @@ public class ReportGenerator {
 
         CsvMapper mapper = new CsvMapper();
 /*        CsvSchema schema = CsvSchema.builder()
-                .addColumn("symbol")
+                 .addColumn("symbol")
                 .addColumn("allPoints")
                 .addColumn("allRank")
                 .build()

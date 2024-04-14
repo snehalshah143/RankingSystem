@@ -1,26 +1,44 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.opencsv.bean.CsvBindByPosition;
 
-@JsonPropertyOrder({"symbol", "allPoints", "allRank"})
+@JsonPropertyOrder({"symbol","allRank","allPoints","M_Rank","M_allPoints","W_Rank","W_allPoints","D_Rank","D_allPoints","MIN75_Rank","MIN75_allPoints"})
 public class StockRankOutput implements Comparable<StockRankOutput>{
-
+    @CsvBindByPosition(position = 1)
     private String symbol;
-
+    @CsvBindByPosition(position = 2)
     private Integer allRank;
-    private Integer D_Rank;
-    private Integer W_Rank;
-
-    private Integer M_Rank;
-
-    private Integer MIN75_Rank;
+    @CsvBindByPosition(position = 3)
     private Integer allPoints;
-
-    private Integer D_IndicatorPoints;
-    private Integer W_IndicatorPoints;
-    private Integer M_IndicatorPoints;
+    @CsvBindByPosition(position = 4)
+    private Integer M_Rank;
+    @CsvBindByPosition(position = 5)
+    private Integer M_allPoints;
+    @CsvBindByPosition(position = 6)
+    private Integer W_Rank;
+    @CsvBindByPosition(position = 7)
+    private Integer W_allPoints;
+    @CsvBindByPosition(position = 8)
+    private Integer D_Rank;
+    @CsvBindByPosition(position = 9)
+    private Integer D_allPoints;
+    @CsvBindByPosition(position = 10)
+    private Integer MIN75_Rank;
+    @CsvBindByPosition(position = 11)
+    private Integer MIN75_allPoints;
+    @CsvBindByPosition(position = 12)
 
     private Integer HL_BreakoutPoints;
+    @CsvBindByPosition(position = 13)
+    private Integer M_IndicatorPoints;
+    @CsvBindByPosition(position = 14)
+    private Integer W_IndicatorPoints;
+    @CsvBindByPosition(position = 15)
+    private Integer D_IndicatorPoints;
+    @CsvBindByPosition(position = 16)
+
+    private Integer MIN75_IndicatorPoints;
 
     private Integer D_rsiPoints;
 
@@ -353,20 +371,65 @@ public class StockRankOutput implements Comparable<StockRankOutput>{
         this.MIN75_Rank = MIN75_Rank;
     }
 
+    public Integer getD_allPoints() {
+        return D_allPoints;
+    }
+
+    public void setD_allPoints(Integer d_allPoints) {
+        D_allPoints = d_allPoints;
+    }
+
+    public Integer getW_allPoints() {
+        return W_allPoints;
+    }
+
+    public void setW_allPoints(Integer w_allPoints) {
+        W_allPoints = w_allPoints;
+    }
+
+    public Integer getM_allPoints() {
+        return M_allPoints;
+    }
+
+    public void setM_allPoints(Integer m_allPoints) {
+        M_allPoints = m_allPoints;
+    }
+
+    public Integer getMIN75_allPoints() {
+        return MIN75_allPoints;
+    }
+
+    public void setMIN75_allPoints(Integer MIN75_allPoints) {
+        this.MIN75_allPoints = MIN75_allPoints;
+    }
+
+    public Integer getMIN75_IndicatorPoints() {
+        return MIN75_IndicatorPoints;
+    }
+
+    public void setMIN75_IndicatorPoints(Integer MIN75_IndicatorPoints) {
+        this.MIN75_IndicatorPoints = MIN75_IndicatorPoints;
+    }
+
     @Override
     public String toString() {
         return "StockRankOutput{" +
                 "symbol='" + symbol + '\'' +
                 ", allRank=" + allRank +
-                ", D_Rank=" + D_Rank +
-                ", W_Rank=" + W_Rank +
-                ", M_Rank=" + M_Rank +
-                ", MIN75_Rank=" + MIN75_Rank +
                 ", allPoints=" + allPoints +
-                ", D_IndicatorPoints=" + D_IndicatorPoints +
-                ", W_IndicatorPoints=" + W_IndicatorPoints +
-                ", M_IndicatorPoints=" + M_IndicatorPoints +
+                ", M_Rank=" + M_Rank +
+                ", M_allPoints=" + M_allPoints +
+                ", W_Rank=" + W_Rank +
+                ", W_allPoints=" + W_allPoints +
+                ", D_Rank=" + D_Rank +
+                ", D_allPoints=" + D_allPoints +
+                ", MIN75_Rank=" + MIN75_Rank +
+                ", MIN75_allPoints=" + MIN75_allPoints +
                 ", HL_BreakoutPoints=" + HL_BreakoutPoints +
+                ", M_IndicatorPoints=" + M_IndicatorPoints +
+                ", W_IndicatorPoints=" + W_IndicatorPoints +
+                ", D_IndicatorPoints=" + D_IndicatorPoints +
+                ", MIN75_IndicatorPoints=" + MIN75_IndicatorPoints +
                 ", D_rsiPoints=" + D_rsiPoints +
                 ", D_macdPoints=" + D_macdPoints +
                 ", D_adxPoints=" + D_adxPoints +
@@ -393,7 +456,6 @@ public class StockRankOutput implements Comparable<StockRankOutput>{
                 ", MIN75_volumePoints=" + MIN75_volumePoints +
                 '}';
     }
-
 
     @Override
     public int compareTo(StockRankOutput o) {
