@@ -8,6 +8,7 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import org.example.comparator.CustomColumnPositionStrategy;
 import org.example.model.StockRankOutput;
 
 import java.io.File;
@@ -23,10 +24,12 @@ public class ReportGenerator {
 
         Writer writer = Files.newBufferedWriter(Paths.get(outputFileName));
 
-        ColumnPositionMappingStrategy mappingStrategy = new ColumnPositionMappingStrategy();
+     //   ColumnPositionMappingStrategy mappingStrategy = new ColumnPositionMappingStrategy();
+    //    mappingStrategy.setType(StockRankOutput.class);
+        ColumnPositionMappingStrategy mappingStrategy = new CustomColumnPositionStrategy<StockRankOutput>();
         mappingStrategy.setType(StockRankOutput.class);
-        mappingStrategy.generateHeader(StockRankOutput.class);
-        mappingStrategy.getColumnMapping();
+       // mappingStrategy.generateHeader(StockRankOutput.class);
+     //   mappingStrategy.getColumnMapping();
                StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
                 .withMappingStrategy(mappingStrategy)
                 . withSeparator(',')
@@ -40,7 +43,7 @@ public class ReportGenerator {
 
         CsvMapper mapper = new CsvMapper();
 /*        CsvSchema schema = CsvSchema.builder()
-                 .addColumn("symbol")
+                .addColumn("symbol")
                 .addColumn("allPoints")
                 .addColumn("allRank")
                 .build()

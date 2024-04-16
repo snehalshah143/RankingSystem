@@ -1,94 +1,160 @@
 package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
+import com.opencsv.bean.CsvIgnore;
 
 @JsonPropertyOrder({"symbol","allRank","allPoints","M_Rank","M_allPoints","W_Rank","W_allPoints","D_Rank","D_allPoints","MIN75_Rank","MIN75_allPoints"})
 public class StockRankOutput implements Comparable<StockRankOutput>{
+    @CsvBindByName(column = "#####", required = true)
+    @CsvBindByPosition(position = 0)
+
+    private String dummy;
+    @CsvBindByName(column = "symbol", required = true)
     @CsvBindByPosition(position = 1)
     private String symbol;
+    @CsvBindByName(column = "allRank", required = true)
     @CsvBindByPosition(position = 2)
     private Integer allRank;
+    @CsvBindByName(column = "allPoints", required = true)
     @CsvBindByPosition(position = 3)
     private Integer allPoints;
+    @CsvBindByName(column = "M_Rank", required = true)
     @CsvBindByPosition(position = 4)
     private Integer M_Rank;
+    @CsvBindByName(column = "M_allPoints", required = true)
     @CsvBindByPosition(position = 5)
     private Integer M_allPoints;
+    @CsvBindByName(column = "W_Rank", required = true)
     @CsvBindByPosition(position = 6)
     private Integer W_Rank;
+    @CsvBindByName(column = "W_allPoints", required = true)
     @CsvBindByPosition(position = 7)
     private Integer W_allPoints;
+    @CsvBindByName(column = "D_Rank", required = true)
     @CsvBindByPosition(position = 8)
     private Integer D_Rank;
+    @CsvBindByName(column = "D_allPoints", required = true)
     @CsvBindByPosition(position = 9)
     private Integer D_allPoints;
+    @CsvBindByName(column = "MIN75_Rank", required = true)
     @CsvBindByPosition(position = 10)
     private Integer MIN75_Rank;
+    @CsvBindByName(column = "MIN75_allPoints", required = true)
     @CsvBindByPosition(position = 11)
     private Integer MIN75_allPoints;
+    @CsvBindByName(column = "HL_BreakoutPoints", required = true)
     @CsvBindByPosition(position = 12)
 
     private Integer HL_BreakoutPoints;
+    @CsvBindByName(column = "M_IndicatorPoints", required = true)
     @CsvBindByPosition(position = 13)
     private Integer M_IndicatorPoints;
+    @CsvBindByName(column = "W_IndicatorPoints", required = true)
     @CsvBindByPosition(position = 14)
     private Integer W_IndicatorPoints;
+    @CsvBindByName(column = "D_IndicatorPoints", required = true)
     @CsvBindByPosition(position = 15)
     private Integer D_IndicatorPoints;
+    @CsvBindByName(column = "MIN75_IndicatorPoints", required = true)
     @CsvBindByPosition(position = 16)
-
     private Integer MIN75_IndicatorPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "D_rsiPoints", required = false)
+    @CsvBindByPosition(position = 17)
     private Integer D_rsiPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "D_macdPoints", required = false)
+    @CsvBindByPosition(position = 18)
     private Integer D_macdPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "D_adxPoints", required = false)
+    @CsvBindByPosition(position = 19)
     private Integer D_adxPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "D_kstPoints", required = false)
+    @CsvBindByPosition(position = 20)
     private Integer D_kstPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "D_emaPoints", required = false)
+    @CsvBindByPosition(position = 21)
     private Integer D_emaPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "D_volumePoints", required = false)
+    @CsvBindByPosition(position = 22)
     private Integer D_volumePoints;
 
-
-
+    @CsvIgnore
+    @CsvBindByName(column = "W_rsiPoints", required = false)
+    @CsvBindByPosition(position = 23)
     private Integer W_rsiPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "W_macdPoints", required = false)
+    @CsvBindByPosition(position = 24)
     private Integer W_macdPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "W_adxPoints", required = false)
+    @CsvBindByPosition(position = 25)
     private Integer W_adxPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "W_kstPoints", required = false)
+    @CsvBindByPosition(position = 26)
     private Integer W_kstPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "W_emaPoints", required = false)
+    @CsvBindByPosition(position = 27)
     private Integer W_emaPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "W_volumePoints", required = false)
+    @CsvBindByPosition(position = 28)
     private Integer W_volumePoints;
-
-
+    @CsvIgnore
+    @CsvBindByName(column = "M_rsiPoints", required = false)
+    @CsvBindByPosition(position = 29)
     private Integer M_rsiPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "M_macdPoints", required = false)
+    @CsvBindByPosition(position = 30)
     private Integer M_macdPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "M_adxPoints", required = false)
+    @CsvBindByPosition(position = 31)
     private Integer M_adxPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "M_kstPoints", required = false)
+    @CsvBindByPosition(position = 32)
     private Integer M_kstPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "M_emaPoints", required = false)
+    @CsvBindByPosition(position = 33)
     private Integer M_emaPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "M_volumePoints", required = false)
+    @CsvBindByPosition(position = 34)
     private Integer M_volumePoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "MIN75_rsiPoints", required = false)
+    @CsvBindByPosition(position = 35)
     private Integer MIN75_rsiPoints;
-
+    @CsvBindByName(column = "MIN75_macdPoints", required = false)
+    @CsvBindByPosition(position = 36)
     private Integer MIN75_macdPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "MIN75_adxPoints", required = false)
+    @CsvBindByPosition(position = 37)
     private Integer MIN75_adxPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "MIN75_kstPoints", required = false)
+    @CsvBindByPosition(position = 38)
     private Integer MIN75_kstPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "MIN75_emaPoints", required = false)
+    @CsvBindByPosition(position = 39)
     private Integer MIN75_emaPoints;
-
+    @CsvIgnore
+    @CsvBindByName(column = "MIN75_volumePoints", required = false)
+    @CsvBindByPosition(position = 40)
     private Integer MIN75_volumePoints;
 
     public String getSymbol() {

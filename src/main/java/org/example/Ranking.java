@@ -74,8 +74,8 @@ generateStockRankReport(stockRankReportFor_3_2_1_1,stocksDataForSymbolMap);
         ReportGenerator reportGenerator=new ReportGenerator();
         List<StockRankOutput> stockRankOutputList= StockRankOutputHelper.getStockRankOutputList(stocksDataForSymbolMap);
 
-        //reportGenerator.generateStockRankReport(stockRankReport,stockRankOutputList);
-        reportGenerator.generateStockRankReport1(stockRankReport,stockRankOutputList);
+        reportGenerator.generateStockRankReport(stockRankReport,stockRankOutputList);
+        //reportGenerator.generateStockRankReport1(stockRankReport,stockRankOutputList);
     }
 
     private static Map<String, StockRank> populateAndGetStockRank(Map<String, StockData> stocksDataForSymbolMap,RankingMultiple rankingMultiple){
